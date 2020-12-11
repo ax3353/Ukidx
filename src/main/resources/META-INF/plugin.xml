@@ -8,7 +8,7 @@
     Ukids plugin
               Features:
           <ul>
-              <li>alt + / 生成方法参数@requestParam, @requestBody注解</li>
+              <li>alt + enter 生成方法参数@requestParam, @requestBody注解</li>
               <li>ctrl + k 查找下一个</li>
               <li>ctrl + shift + k 查找上一个</li>
           </ul>
