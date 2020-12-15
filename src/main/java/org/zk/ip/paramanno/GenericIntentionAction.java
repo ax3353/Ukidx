@@ -5,16 +5,25 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.util.IncorrectOperationException;
+import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
 public abstract class GenericIntentionAction implements IntentionAction {
 
+    private final Annotation annotation;
+
+    public GenericIntentionAction(Annotation annotation) {
+        this.annotation = annotation;
+    }
+
+    @Nls(capitalization = Nls.Capitalization.Sentence)
     @NotNull
     @Override
     public String getFamilyName() {
-        return getText();
+        return this.getText();
     }
 
     @Override
@@ -42,6 +51,21 @@ public abstract class GenericIntentionAction implements IntentionAction {
     @Override
     public boolean startInWriteAction() {
         return true;
+    }
+
+    @Override
+    public void invoke(@NotNull Project project, Editor editor, PsiFile psiFile) throws IncorrectOperationException {
+        PsiElement element = psiFile.findElementAt(editor.getCaretModel().getOffset());
+        PsiParameter parameter = PsiTreeUtil.getParentOfType(element, PsiParameter.class);
+        AnnotationService annotationService = AnnotationService.getInstance(project);
+        if (null != parameter) {
+            annotationService.addAnnotationWithParameterName(parameter, annotation);
+        } else {
+            PsiMethod method = PsiTreeUtil.getParentOfType(element, PsiMethod.class);
+            if (null != method) {
+                annotationService.addAnnotationWithParameterNames(method, annotation);
+            }
+        }
     }
 
 }

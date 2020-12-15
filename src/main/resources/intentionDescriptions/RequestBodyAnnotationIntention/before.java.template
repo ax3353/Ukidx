@@ -1,0 +1,7 @@
+public class X {
+
+    @PostMapping("/foo")
+    void foo(Customer c) {
+      // do something
+    }
+}

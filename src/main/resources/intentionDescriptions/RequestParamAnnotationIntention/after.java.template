@@ -1,0 +1,7 @@
+public class X {
+
+  @GetMapping("/foo")
+  void foo(@RequestParam("a") String a, @RequestParam("b") String b) {
+    // do something
+  }
+}

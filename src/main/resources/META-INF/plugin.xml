@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.zk.ip.Ukidx</id>
     <name>Ukidx</name>
-    <version>0.1</version>
+    <version>0.2</version>
     <vendor email="247213579@qq.com">zk</vendor>
 
     <description> <![CDATA[
@@ -34,12 +34,12 @@
         <projectService id="org.zk.ip.paramanno.EditorService" serviceImplementation="org.zk.ip.paramanno.EditorService"/>
 
         <!--生成参数@RequestParam注解-->
-        <intentionAction id="org.zk.ip.paramanno.GenerateRequestParamAnnotation">
-            <className>org.zk.ip.paramanno.GenerateRequestParamAnnotation</className>
+        <intentionAction id="org.zk.ip.paramanno.RequestParamAnnotationIntention">
+            <className>org.zk.ip.paramanno.RequestParamAnnotationIntention</className>
         </intentionAction>
         <!--生成参数@RequestBody注解-->
-        <intentionAction id="org.zk.ip.paramanno.GenerateRequestBodyAnnotation">
-            <className>org.zk.ip.paramanno.GenerateRequestBodyAnnotation</className>
+        <intentionAction id="org.zk.ip.paramanno.RequestBodyAnnotationIntention">
+            <className>org.zk.ip.paramanno.RequestBodyAnnotationIntention</className>
         </intentionAction>
     </extensions>
 

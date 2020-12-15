@@ -1,0 +1,7 @@
+public class X {
+
+  @GetMapping("/foo")
+  void foo(String a, String b) {
+    // do something
+  }
+}
