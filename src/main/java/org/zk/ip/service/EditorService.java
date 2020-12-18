@@ -1,4 +1,4 @@
-package org.zk.ip.paramanno;
+package org.zk.ip.service;
 
 import com.intellij.formatting.FormatTextRanges;
 import com.intellij.openapi.components.ServiceManager;

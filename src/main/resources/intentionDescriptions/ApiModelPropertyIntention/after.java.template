@@ -1,0 +1,15 @@
+public class A {
+
+	public static final Integer X = 0;
+
+	public static final Integer Y = 1;
+
+	@ApiModelProperty("主键")
+	private Long id;
+
+	@ApiModelProperty("名称")
+	private String name;
+
+	@ApiModelProperty("父id")
+	private Long parentId;
+}

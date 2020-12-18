@@ -1,10 +1,12 @@
-package org.zk.ip.paramanno;
+package org.zk.ip.service;
 
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import org.jetbrains.annotations.NotNull;
+import org.zk.ip.annotation.Annotation;
+import org.zk.ip.utils.JavaUtils;
 
 import java.util.Optional;
 
@@ -45,7 +47,7 @@ public class AnnotationService {
      */
     public void addAnnotation(@NotNull PsiParameter parameter, @NotNull Annotation annotation) {
         PsiModifierList modifierList = parameter.getModifierList();
-        if (JavaUtils.isAnnotationPresent(parameter, annotation) || null == modifierList) {
+        if (null == modifierList) {
             return;
         }
 

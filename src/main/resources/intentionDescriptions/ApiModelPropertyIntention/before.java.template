@@ -1,0 +1,12 @@
+public class A {
+
+	public static final Integer X = 0;
+
+	public static final Integer Y = 1;
+
+	private Long id;
+
+	private String name;
+
+	private Long parentId;
+}

@@ -1,4 +1,4 @@
-package org.zk.ip.find;
+package org.zk.ip.action;
 
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
@@ -11,7 +11,7 @@ import com.intellij.openapi.util.TextRange;
  * @Author kun.zhu
  * @Date 2018/9/12 11:04
  */
-public class SeekNextKeyword extends MyAction {
+public class FindNextKeywordAction extends FindKeywordAction {
 
 	@Override
 	protected Offset offset(Editor editor, String keyword) {

@@ -1,4 +1,4 @@
-package org.zk.ip.find;
+package org.zk.ip.action;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -12,7 +12,7 @@ import com.intellij.openapi.project.Project;
  * @author: kun.zhu
  * @create: 2018-11-27 15:41
  **/
-public abstract class MyAction extends AnAction {
+public abstract class FindKeywordAction extends AnAction {
 
 	protected static String cachaKeyword = "";
 
@@ -59,4 +59,35 @@ public abstract class MyAction extends AnAction {
 	}
 
 	protected abstract Offset offset(Editor editor, String keyword);
+
+	public static class Offset {
+
+		int startOffset;
+
+		int endOffset;
+
+		public int getStartOffset() {
+			return startOffset;
+		}
+
+		public void setStartOffset(int startOffset) {
+			this.startOffset = startOffset;
+		}
+
+		public int getEndOffset() {
+			return endOffset;
+		}
+
+		public void setEndOffset(int endOffset) {
+			this.endOffset = endOffset;
+		}
+
+		public Offset() {
+		}
+
+		public Offset(int startOffset, int endOffset) {
+			this.startOffset = startOffset;
+			this.endOffset = endOffset;
+		}
+	}
 }

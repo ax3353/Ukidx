@@ -1,7 +1,8 @@
-package org.zk.ip.paramanno;
+package org.zk.ip.intention;
 
 import com.intellij.codeInspection.util.IntentionName;
 import org.jetbrains.annotations.NotNull;
+import org.zk.ip.annotation.Annotation;
 
 /**
  * 描述: 生成参数@RequestBody
@@ -9,9 +10,9 @@ import org.jetbrains.annotations.NotNull;
  * @author kun.zhu
  * @date 2020/12/11 15:51
  */
-public class RequestBodyAnnotationIntention extends GenericIntentionAction {
+public class RequestBodyIntention extends ParamAnnotationIntention {
 
-    public RequestBodyAnnotationIntention() {
+    public RequestBodyIntention() {
         super(Annotation.REQUESTBODY);
     }
 

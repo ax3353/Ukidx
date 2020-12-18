@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.zk.ip.Ukidx</id>
     <name>Ukidx</name>
-    <version>0.2</version>
+    <version>0.3</version>
     <vendor email="247213579@qq.com">zk</vendor>
 
     <description> <![CDATA[
@@ -9,6 +9,7 @@
               Features:
           <ul>
               <li>alt + enter 生成方法参数@requestParam, @requestBody注解</li>
+              <li>alt + enter 生成字段@ApiModelProperty注解</li>
               <li>ctrl + k 查找下一个</li>
               <li>ctrl + shift + k 查找上一个</li>
           </ul>
@@ -23,34 +24,37 @@
     ]]>
     </change-notes>
 
-    <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
-    <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <!--项目服务-->
-        <projectService id="org.zk.ip.paramanno.AnnotationService" serviceImplementation="org.zk.ip.paramanno.AnnotationService"/>
-        <projectService id="org.zk.ip.paramanno.EditorService" serviceImplementation="org.zk.ip.paramanno.EditorService"/>
+        <projectService id="org.zk.ip.service.AnnotationService" serviceImplementation="org.zk.ip.service.AnnotationService"/>
+        <projectService id="org.zk.ip.service.EditorService" serviceImplementation="org.zk.ip.service.EditorService"/>
 
         <!--生成参数@RequestParam注解-->
-        <intentionAction id="org.zk.ip.paramanno.RequestParamAnnotationIntention">
-            <className>org.zk.ip.paramanno.RequestParamAnnotationIntention</className>
+        <intentionAction id="org.zk.ip.intention.RequestParamIntention">
+            <className>org.zk.ip.intention.RequestParamIntention</className>
         </intentionAction>
         <!--生成参数@RequestBody注解-->
-        <intentionAction id="org.zk.ip.paramanno.RequestBodyAnnotationIntention">
-            <className>org.zk.ip.paramanno.RequestBodyAnnotationIntention</className>
+        <intentionAction id="org.zk.ip.intention.RequestBodyIntention">
+            <className>org.zk.ip.intention.RequestBodyIntention</className>
+        </intentionAction>
+        <!--生成参数@ApiModelProperty注解-->
+        <intentionAction id="org.zk.ip.intention.ApiModelPropertyIntention">
+            <className>org.zk.ip.intention.ApiModelPropertyIntention</className>
         </intentionAction>
     </extensions>
 
     <actions>
         <group id="org.zk.ip.SeekKeywordGroup" text="Seek Keyword" popup="true">
             <add-to-group group-id="EditMenu" anchor="after" relative-to-action="FileEditor.OpenDataEditor"/>
-            <action class="org.zk.ip.find.SeekPreviousKeyword" id="org.zk.ip.find.SeekPreviousKeyword"
+            <action class="org.zk.ip.action.FindPrevKeywordAction" id="org.zk.ip.action.FindPrevKeywordAction"
                     text="Previous" description="Find previous">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift k"/>
             </action>
-            <action class="org.zk.ip.find.SeekNextKeyword" id="org.zk.ip.find.SeekNextKeyword"
+            <action class="org.zk.ip.action.FindNextKeywordAction" id="org.zk.ip.action.FindNextKeywordAction"
                     text="Next" description="Find next">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl k"/>
             </action>

@@ -1,4 +1,4 @@
-package org.zk.ip.paramanno;
+package org.zk.ip.annotation;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Maps;
@@ -12,6 +12,8 @@ public class Annotation implements Cloneable {
     public static final Annotation REQUESTPARAM = new Annotation("@RequestParam", "org.springframework.web.bind.annotation.RequestParam");
 
     public static final Annotation REQUESTBODY = new Annotation("@RequestBody", "org.springframework.web.bind.annotation.RequestBody");
+
+    public static final Annotation APIMODELPROPERTY = new Annotation("@ApiModelProperty", "io.swagger.annotations.ApiModelProperty");
 
     private final String label;
 

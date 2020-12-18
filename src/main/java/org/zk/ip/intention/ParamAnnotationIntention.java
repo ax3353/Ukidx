@@ -1,4 +1,4 @@
-package org.zk.ip.paramanno;
+package org.zk.ip.intention;
 
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.openapi.editor.Editor;
@@ -8,14 +8,22 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
+import org.zk.ip.annotation.Annotation;
+import org.zk.ip.service.AnnotationService;
+import org.zk.ip.utils.JavaUtils;
 
 import java.util.Optional;
 
-public abstract class GenericIntentionAction implements IntentionAction {
+/**
+ * 描述: <>
+ * @author kun.zhu
+ * @date 2020/12/16 17:43
+ */
+public abstract class ParamAnnotationIntention implements IntentionAction {
 
     private final Annotation annotation;
 
-    public GenericIntentionAction(Annotation annotation) {
+    public ParamAnnotationIntention(Annotation annotation) {
         this.annotation = annotation;
     }
 
@@ -42,10 +50,17 @@ public abstract class GenericIntentionAction implements IntentionAction {
             return false;
         }
 
+        PsiCodeBlock codeBlock = PsiTreeUtil.getParentOfType(element, PsiCodeBlock.class);
+        if (Optional.ofNullable(codeBlock).isPresent()) {
+            return false;
+        }
+
         PsiParameter parameter = PsiTreeUtil.getParentOfType(element, PsiParameter.class);
         PsiMethod method = PsiTreeUtil.getParentOfType(element, PsiMethod.class);
-        return (null != parameter && !JavaUtils.isAnnotationPresent(parameter, Annotation.REQUESTPARAM)) ||
-                (null != method && !JavaUtils.isAllParameterWithAnnotation(method, Annotation.REQUESTPARAM));
+        return (null != parameter && !JavaUtils.isAnnotationPresent(parameter, Annotation.REQUESTPARAM)
+                && !JavaUtils.isAnnotationPresent(parameter, Annotation.REQUESTBODY)) ||
+                (null != method && !JavaUtils.isAllParameterWithAnnotation(method, Annotation.REQUESTPARAM)
+                        && !JavaUtils.isAllParameterWithAnnotation(method, Annotation.REQUESTBODY));
     }
 
     @Override
