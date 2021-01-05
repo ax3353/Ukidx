@@ -1,7 +1,7 @@
 ## 日常小功能插件
 ### 用法：
-1. alt + / 生成方法参数@RequestParam, @equestBody注解
-2. alt + / 生成方法参数@ApiModelProperty注解
+1. alt + enter 生成方法参数@RequestParam, @equestBody注解
+2. alt + enter 生成方法参数@ApiModelProperty注解
 3. ctrl + k 查找下一个
 4. ctrl + shift + k 查找上一个
 
