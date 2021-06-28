@@ -1,6 +1,8 @@
 package org.zk.ip.intention;
 
 import com.intellij.codeInsight.intention.IntentionAction;
+import com.intellij.codeInspection.util.IntentionFamilyName;
+import com.intellij.codeInspection.util.IntentionName;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
@@ -16,21 +18,24 @@ import org.zk.ip.utils.JavaUtils;
 import java.util.Optional;
 
 /**
- * 描述: <>
+ * 描述: Mybatis Mapper接口的方法上生成@Param注解
+ *
  * @author kun.zhu
- * @date 2020/12/16 17:43
+ * @date 2021/6/25 14:31
  */
-public abstract class ParamAnnotationIntention implements IntentionAction {
+public class MybatisParamIntention implements IntentionAction {
 
-    private final Annotation annotation;
-
-    public ParamAnnotationIntention(Annotation annotation) {
-        this.annotation = annotation;
+    @Override
+    @IntentionName
+    @NotNull
+    public String getText() {
+        return "[UkidX] Generate @Param";
     }
 
     @Nls(capitalization = Nls.Capitalization.Sentence)
-    @NotNull
     @Override
+    @NotNull
+    @IntentionFamilyName
     public String getFamilyName() {
         return this.getText();
     }
@@ -47,26 +52,14 @@ public abstract class ParamAnnotationIntention implements IntentionAction {
         }
 
         PsiClass type = PsiTreeUtil.getParentOfType(element, PsiClass.class);
-        if (!Optional.ofNullable(type).isPresent()) {
-            return false;
-        }
-
-        PsiCodeBlock codeBlock = PsiTreeUtil.getParentOfType(element, PsiCodeBlock.class);
-        if (Optional.ofNullable(codeBlock).isPresent()) {
+        if (type == null || !type.isInterface()) {
             return false;
         }
 
         PsiParameter parameter = PsiTreeUtil.getParentOfType(element, PsiParameter.class);
         PsiMethod method = PsiTreeUtil.getParentOfType(element, PsiMethod.class);
-        return (null != parameter && !JavaUtils.isAnnotationPresent(parameter, Annotation.REQUESTPARAM)
-                && !JavaUtils.isAnnotationPresent(parameter, Annotation.REQUESTBODY)) ||
-                (null != method && !JavaUtils.isAllParameterWithAnnotation(method, Annotation.REQUESTPARAM)
-                        && !JavaUtils.isAllParameterWithAnnotation(method, Annotation.REQUESTBODY));
-    }
-
-    @Override
-    public boolean startInWriteAction() {
-        return true;
+        return (null != parameter && !JavaUtils.isAnnotationPresent(parameter, Annotation.PARAM))
+                || (null != method && !JavaUtils.isAllParameterWithAnnotation(method, Annotation.PARAM));
     }
 
     @Override
@@ -76,14 +69,18 @@ public abstract class ParamAnnotationIntention implements IntentionAction {
             PsiParameter parameter = PsiTreeUtil.getParentOfType(element, PsiParameter.class);
             AnnotationService annotationService = AnnotationService.getInstance(project);
             if (null != parameter) {
-                annotationService.addAnnotationWithParameterName(parameter, annotation);
+                annotationService.addAnnotationWithParameterName(parameter, Annotation.PARAM);
             } else {
                 PsiMethod method = PsiTreeUtil.getParentOfType(element, PsiMethod.class);
                 if (null != method) {
-                    annotationService.addAnnotationWithParameterNames(method, annotation);
+                    annotationService.addAnnotationWithParameterNames(method, Annotation.PARAM);
                 }
             }
         });
     }
 
+    @Override
+    public boolean startInWriteAction() {
+        return false;
+    }
 }

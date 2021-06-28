@@ -1,0 +1,4 @@
+public interface XxxMapper {
+
+  void foo(String a, String b);
+}

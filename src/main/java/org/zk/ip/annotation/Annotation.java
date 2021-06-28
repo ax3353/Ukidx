@@ -7,6 +7,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * 描述: <>
+ * @author kun.zhu
+ * @date 2021/6/25 14:28
+ */
 public class Annotation implements Cloneable {
 
     public static final Annotation REQUESTPARAM = new Annotation("@RequestParam", "org.springframework.web.bind.annotation.RequestParam");
@@ -14,6 +19,9 @@ public class Annotation implements Cloneable {
     public static final Annotation REQUESTBODY = new Annotation("@RequestBody", "org.springframework.web.bind.annotation.RequestBody");
 
     public static final Annotation APIMODELPROPERTY = new Annotation("@ApiModelProperty", "io.swagger.annotations.ApiModelProperty");
+
+    public static final Annotation PARAM = new Annotation("@Param", "org.apache.ibatis.annotations.Param");
+
 
     private final String label;
 

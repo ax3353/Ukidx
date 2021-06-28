@@ -1,0 +1,4 @@
+public interface XxxMapper {
+
+  void foo(@Param("a") String a, @Param("b") String b);
+}

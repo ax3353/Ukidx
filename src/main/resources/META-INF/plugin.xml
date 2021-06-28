@@ -1,13 +1,14 @@
 <idea-plugin>
     <id>org.zk.ip.Ukidx</id>
     <name>Ukidx</name>
-    <version>0.3</version>
+    <version>0.3.1</version>
     <vendor email="247213579@qq.com">zk</vendor>
 
     <description> <![CDATA[
     Ukids plugin
               Features:
           <ul>
+              <li>alt + enter 生成方法参数@Param注解</li>
               <li>alt + enter 生成方法参数@requestParam, @requestBody注解</li>
               <li>alt + enter 生成字段@ApiModelProperty注解</li>
               <li>ctrl + k 查找下一个</li>
@@ -44,6 +45,10 @@
         <!--生成参数@ApiModelProperty注解-->
         <intentionAction id="org.zk.ip.intention.ApiModelPropertyIntention">
             <className>org.zk.ip.intention.ApiModelPropertyIntention</className>
+        </intentionAction>
+        <!--生成Mybatis参数@Param注解-->
+        <intentionAction id="org.zk.ip.intention.MybatisParamIntention">
+            <className>org.zk.ip.intention.MybatisParamIntention</className>
         </intentionAction>
     </extensions>
 
