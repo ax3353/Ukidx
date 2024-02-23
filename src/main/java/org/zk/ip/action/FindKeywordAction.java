@@ -14,11 +14,11 @@ import com.intellij.openapi.project.Project;
  **/
 public abstract class FindKeywordAction extends AnAction {
 
-	protected static String cachaKeyword = "";
+	protected static String cacheKeyword = "";
 
 	@Override
 	public void update(final AnActionEvent e) {
-		final Project project = e.getProject();
+		final Project project = e.getData(CommonDataKeys.PROJECT);
 		final Editor editor = e.getData(CommonDataKeys.EDITOR);
 		// 如果没有项目打开或没有文本被选中则不显示action
 		e.getPresentation().setVisible((project != null && editor != null
@@ -38,14 +38,14 @@ public abstract class FindKeywordAction extends AnAction {
 
 		boolean hasSelection = editor.getSelectionModel().hasSelection();
 		if (hasSelection) {
-			cachaKeyword = selectionModel.getSelectedText();
+			cacheKeyword = selectionModel.getSelectedText();
 		}
 
-		if (cachaKeyword == null || "".equals(cachaKeyword)) {
+		if (cacheKeyword == null || "".equals(cacheKeyword)) {
 			return;
 		}
 
-		Offset offset = this.offset(editor, cachaKeyword);
+		Offset offset = this.offset(editor, cacheKeyword);
 		if (offset == null) {
 			return;
 		}

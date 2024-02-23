@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.zk.ip.Ukidx</id>
     <name>Ukidx</name>
-    <version>0.3.1</version>
+    <version>1.0</version>
     <vendor email="247213579@qq.com">zk</vendor>
 
     <description> <![CDATA[
@@ -50,11 +50,19 @@
         <intentionAction id="org.zk.ip.intention.MybatisParamIntention">
             <className>org.zk.ip.intention.MybatisParamIntention</className>
         </intentionAction>
+        <!--类字段名从驼峰转下划线-->
+        <intentionAction>
+            <className>org.zk.ip.intention.ToUnderlineIntention</className>
+        </intentionAction>
+        <!--类字段名从下划线转驼峰-->
+        <intentionAction>
+            <className>org.zk.ip.intention.ToCamelIntention</className>
+        </intentionAction>
     </extensions>
 
     <actions>
-        <group id="org.zk.ip.SeekKeywordGroup" text="Seek Keyword" popup="true">
-            <add-to-group group-id="EditMenu" anchor="after" relative-to-action="FileEditor.OpenDataEditor"/>
+        <group id="org.zk.ip.TextOperate" text="Text Operate" popup="true">
+            <add-to-group group-id="EditMenu" anchor="after" relative-to-action="EditMacros"/>
             <action class="org.zk.ip.action.FindPrevKeywordAction" id="org.zk.ip.action.FindPrevKeywordAction"
                     text="Previous" description="Find previous">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift k"/>
@@ -62,6 +70,10 @@
             <action class="org.zk.ip.action.FindNextKeywordAction" id="org.zk.ip.action.FindNextKeywordAction"
                     text="Next" description="Find next">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl k"/>
+            </action>
+            <action id="org.zk.ip.action.NamingConverterAction" class="org.zk.ip.action.NamingConverterAction"
+                    text="Name Converter" description="Name converter">
+                <keyboard-shortcut keymap="$default" first-keystroke="alt C"/>
             </action>
         </group>
     </actions>

@@ -1,0 +1,6 @@
+public class X {
+
+  private String aa_bb_cc;
+
+  ...
+}

@@ -47,7 +47,7 @@ public abstract class ParamAnnotationIntention implements IntentionAction {
         }
 
         PsiClass type = PsiTreeUtil.getParentOfType(element, PsiClass.class);
-        if (!Optional.ofNullable(type).isPresent()) {
+        if (Optional.ofNullable(type).isEmpty()) {
             return false;
         }
 
