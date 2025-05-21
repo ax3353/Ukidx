@@ -4,77 +4,84 @@
     <version>1.0</version>
     <vendor email="247213579@qq.com">zk</vendor>
 
-    <description> <![CDATA[
-    Ukids plugin
-              Features:
-          <ul>
-              <li>alt + enter 生成方法参数@Param注解</li>
-              <li>alt + enter 生成方法参数@requestParam, @requestBody注解</li>
-              <li>alt + enter 生成字段@ApiModelProperty注解</li>
-              <li>ctrl + k 查找下一个</li>
-              <li>ctrl + shift + k 查找上一个</li>
-          </ul>
-
-      QQ: 247213579
+    <description><![CDATA[
+        Ukidx plugin
+        Features:
+        <ul>
+            <li>alt + enter 生成方法参数 @Param 注解</li>
+            <li>alt + enter 生成方法参数 @requestParam、@requestBody 注解</li>
+            <li>alt + enter 生成字段 @ApiModelProperty 注解</li>
+            <li>alt + c 驼峰与下划线互转</li>
+            <li>alt + x 截图贴图</li>
+            <li>ctrl + k 查找下一个</li>
+            <li>ctrl + shift + k 查找上一个</li>
+        </ul>
+        QQ: 247213579
     ]]></description>
 
     <change-notes><![CDATA[
-          <ul>
-              <li>no changes</li>
-          </ul>
-    ]]>
-    </change-notes>
+        <ul>
+            <li>no changes</li>
+        </ul>
+    ]]></change-notes>
 
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!--项目服务-->
-        <projectService id="org.zk.ip.service.AnnotationService" serviceImplementation="org.zk.ip.service.AnnotationService"/>
-        <projectService id="org.zk.ip.service.EditorService" serviceImplementation="org.zk.ip.service.EditorService"/>
+        <!-- 项目服务 -->
+        <projectService id="org.zk.ip.service.AnnotationService"
+                        serviceImplementation="org.zk.ip.service.AnnotationService"/>
+        <projectService id="org.zk.ip.service.EditorService"
+                        serviceImplementation="org.zk.ip.service.EditorService"/>
 
-        <!--生成参数@RequestParam注解-->
+        <!-- 意图动作 -->
         <intentionAction id="org.zk.ip.intention.RequestParamIntention">
             <className>org.zk.ip.intention.RequestParamIntention</className>
         </intentionAction>
-        <!--生成参数@RequestBody注解-->
         <intentionAction id="org.zk.ip.intention.RequestBodyIntention">
             <className>org.zk.ip.intention.RequestBodyIntention</className>
         </intentionAction>
-        <!--生成参数@ApiModelProperty注解-->
         <intentionAction id="org.zk.ip.intention.ApiModelPropertyIntention">
             <className>org.zk.ip.intention.ApiModelPropertyIntention</className>
         </intentionAction>
-        <!--生成Mybatis参数@Param注解-->
         <intentionAction id="org.zk.ip.intention.MybatisParamIntention">
             <className>org.zk.ip.intention.MybatisParamIntention</className>
         </intentionAction>
-        <!--类字段名从驼峰转下划线-->
-        <intentionAction>
+        <intentionAction id="org.zk.ip.intention.ToUnderlineIntention">
             <className>org.zk.ip.intention.ToUnderlineIntention</className>
         </intentionAction>
-        <!--类字段名从下划线转驼峰-->
-        <intentionAction>
+        <intentionAction id="org.zk.ip.intention.ToCamelIntention">
             <className>org.zk.ip.intention.ToCamelIntention</className>
         </intentionAction>
     </extensions>
 
     <actions>
+        <!-- TextOperate 菜单组 -->
         <group id="org.zk.ip.TextOperate" text="Text Operate" popup="true">
             <add-to-group group-id="EditMenu" anchor="after" relative-to-action="EditMacros"/>
-            <action class="org.zk.ip.action.FindPrevKeywordAction" id="org.zk.ip.action.FindPrevKeywordAction"
+            <action id="org.zk.ip.action.FindPrevKeywordAction"
+                    class="org.zk.ip.action.FindPrevKeywordAction"
                     text="Previous" description="Find previous">
-                <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift k"/>
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift K"/>
             </action>
-            <action class="org.zk.ip.action.FindNextKeywordAction" id="org.zk.ip.action.FindNextKeywordAction"
+            <action id="org.zk.ip.action.FindNextKeywordAction"
+                    class="org.zk.ip.action.FindNextKeywordAction"
                     text="Next" description="Find next">
-                <keyboard-shortcut keymap="$default" first-keystroke="ctrl k"/>
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl K"/>
             </action>
-            <action id="org.zk.ip.action.NamingConverterAction" class="org.zk.ip.action.NamingConverterAction"
+            <action id="org.zk.ip.action.NamingConverterAction"
+                    class="org.zk.ip.action.NamingConverterAction"
                     text="Name Converter" description="Name converter">
                 <keyboard-shortcut keymap="$default" first-keystroke="alt C"/>
             </action>
         </group>
+
+        <action id="org.zk.ip.action.ScreenCaptureAction"
+                class="org.zk.ip.action.ScreenCaptureAction"
+                text="ScreenCaptureAction"  description="ScreenCaptureAction">
+            <keyboard-shortcut keymap="$default" first-keystroke="alt X"/>
+        </action>
     </actions>
 </idea-plugin>

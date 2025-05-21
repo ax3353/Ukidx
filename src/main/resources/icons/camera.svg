@@ -1,0 +1,13 @@
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <!-- 相机主体：蓝色 -->
+  <path fill="#007BFF" d="M4 3h1l1-1h4l1 1h1a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"></path>
+  
+  <!-- 镜头外圈：红色 -->
+  <circle cx="8" cy="8" r="3" fill="#FF4136"></circle>
+
+  <!-- 镜头内圈：白色高光 -->
+  <circle cx="8" cy="8" r="1.5" fill="white"></circle>
+
+  <!-- 闪光灯：红色 -->
+  <circle cx="12.5" cy="5.5" r="0.5" fill="#FF4136"></circle>
+</svg>
