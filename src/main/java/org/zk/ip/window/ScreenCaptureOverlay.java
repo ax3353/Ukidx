@@ -102,7 +102,7 @@ public class ScreenCaptureOverlay extends JWindow {
 
         // 绘制选区红色边框
         if (captureRect != null) {
-            g2.setStroke(new BasicStroke(2f));
+            g2.setStroke(new BasicStroke(1.5f));
             g2.setColor(new Color(40, 130, 239));
             g2.draw(captureRect);
         }
