@@ -80,7 +80,9 @@
 
         <action id="org.zk.ip.action.ScreenCaptureAction"
                 class="org.zk.ip.action.ScreenCaptureAction"
-                text="ScreenCaptureAction"  description="ScreenCaptureAction">
+                text="ScreenCaptureAction"  description="ScreenCaptureAction"
+                icon="/icons/camera.svg">
+            <add-to-group group-id="MainToolBar" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt X"/>
         </action>
     </actions>

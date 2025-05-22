@@ -1,6 +1,5 @@
 package org.zk.ip.window;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -8,6 +7,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+/**
+ * @author zk
+ */
 public class FloatingImageWindow extends JWindow {
     private Point mouseOffset;
     private final BufferedImage image;
@@ -34,11 +36,19 @@ public class FloatingImageWindow extends JWindow {
             protected void paintBorder(Graphics g) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2.setColor(new Color(135, 206, 250, 128)); // 半透明淡蓝色
-                g2.setStroke(new BasicStroke(4f)); // 边框粗细
 
-                int arc = 10; // 圆角半径
-                g2.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, arc, arc);
+                int width = getWidth();
+                int height = getHeight();
+                int arc = 10;
+
+                for (int i = 1; i <= 6; i++) {
+                    float alpha = 0.03f * i;
+                    g2.setColor(new Color(0, 149, 255, (int) (alpha * 255)));
+                    g2.setStroke(new BasicStroke(i * 1.5f));
+                    int offset = (7 - i);
+                    g2.drawRoundRect(-offset, -offset, width + 2 * offset, height + 2 * offset, arc, arc);
+                }
+
                 g2.dispose();
             }
         };
