@@ -9,5 +9,6 @@
 7. ctrl + c 选中某个字符串，驼峰与下划线互转
 8. alt + enter 点击To Underline驼峰转下划线
 9. alt + enter 点击To Camel下划线转驼峰
+10. alt + x 截图贴图
 
 如果快捷键冲突 要自已调下
