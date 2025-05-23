@@ -48,30 +48,30 @@ public class FloatingImageWindow extends JWindow {
 
                 int width = getWidth();
                 int height = getHeight();
-                int arc = 15;
-
 
                 for (int i = 1; i <= 6; i++) {
                     float alpha = 0.02f * i;
                     if (selected) {
-                        g2.setColor(new Color(106, 222, 48, (int) (alpha * 255)));
-                        g2.setStroke(new BasicStroke(i * 2f));
+                        g2.setColor(new Color(0, 149, 255, (int) (alpha * 255)));
+                        g2.setStroke(new BasicStroke(i * 1f));
                     } else {
                         g2.setColor(new Color(129, 129, 129, (int) (alpha * 255)));
-                        g2.setStroke(new BasicStroke(i * 1.5f));
+                        g2.setStroke(new BasicStroke(i * 2f));
                     }
                     int offset = (7 - i);
-                    g2.drawRoundRect(-offset, -offset, width + 2 * offset, height + 2 * offset, arc, arc);
+                    g2.drawRoundRect(-offset, -offset, width + 2 * offset, height + 2 * offset, 0, 0);
                 }
 
                 g2.dispose();
             }
         };
+
         imgPanel.setOpaque(false);
         imgPanel.setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
 
         // 鼠标监听：点击选中，拖拽与右键菜单
         imgPanel.addMouseListener(new MouseAdapter() {
+
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.isPopupTrigger()) {
@@ -84,6 +84,7 @@ public class FloatingImageWindow extends JWindow {
 
             @Override
             public void mouseReleased(MouseEvent e) {
+
                 if (e.isPopupTrigger()) {
                     popupMenu.show(imgPanel, e.getX(), e.getY());
                 }
@@ -123,6 +124,7 @@ public class FloatingImageWindow extends JWindow {
         }
         selected = true;
         selectedWindow = this;
+        setAlwaysOnTop(true);
         repaint();
     }
 
@@ -131,6 +133,7 @@ public class FloatingImageWindow extends JWindow {
         if (selectedWindow == this) {
             selectedWindow = null;
         }
+        setAlwaysOnTop(false);
         repaint();
     }
 
