@@ -26,7 +26,7 @@ public class FloatingImageWindow extends JWindow {
 
     // 发光效果相关常量
     private static final int GLOW_SIZE = 6; // 发光范围
-    private static final Color SELECTED_GLOW_COLOR = new Color(135, 219, 250, 255); // 淡蓝色发光
+    private static final Color SELECTED_GLOW_COLOR = new Color(118, 176, 245, 255); // 淡蓝色发光
     private static final Color UNSELECTED_GLOW_COLOR = new Color(128, 128, 128, 60); // 淡灰色发光
 
     public FloatingImageWindow(BufferedImage img) {
@@ -101,8 +101,8 @@ public class FloatingImageWindow extends JWindow {
                 }
 
                 // 绘制圆角边框线条
-                g2d.setColor(selected ? new Color(190, 190, 190, 255) : new Color(135, 219, 250, 255));
-                g2d.setStroke(new BasicStroke(0.5f));
+                g2d.setColor(selected ? new Color(128, 128, 128, 255) : new Color(118, 176, 245, 255));
+                g2d.setStroke(new BasicStroke(0.2f));
                 g2d.draw(new java.awt.geom.RoundRectangle2D.Double(
                         imgX - 1, imgY - 1,
                         imgWidth + 2, imgHeight + 2,
