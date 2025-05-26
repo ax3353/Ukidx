@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Area;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +23,11 @@ public class FloatingImageWindow extends JWindow {
     private final BufferedImage image;
     private final KeyEventDispatcher escDispatcher;
     private boolean selected = false;
+
+    // 发光效果相关常量
+    private static final int GLOW_SIZE = 6; // 发光范围
+    private static final Color SELECTED_GLOW_COLOR = new Color(135, 219, 250, 255); // 淡蓝色发光
+    private static final Color UNSELECTED_GLOW_COLOR = new Color(128, 128, 128, 60); // 淡灰色发光
 
     public FloatingImageWindow(BufferedImage img) {
         this.image = img;
@@ -38,36 +45,78 @@ public class FloatingImageWindow extends JWindow {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                g.drawImage(image, 0, 0, null);
+                Graphics2D g2d = (Graphics2D) g.create();
+
+                // 启用抗锯齿
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
+                // 绘制发光效果
+                drawGlowEffect(g2d);
+
+                // 绘制原始图片，位置偏移发光大小
+                g2d.drawImage(image, GLOW_SIZE, GLOW_SIZE, null);
+
+                g2d.dispose();
             }
 
-            @Override
-            protected void paintBorder(Graphics g) {
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            private void drawGlowEffect(Graphics2D g2d) {
+                Color glowColor = selected ? SELECTED_GLOW_COLOR : UNSELECTED_GLOW_COLOR;
 
-                int width = getWidth();
-                int height = getHeight();
+                // 计算图片区域
+                int imgX = GLOW_SIZE;
+                int imgY = GLOW_SIZE;
+                int imgWidth = image.getWidth();
+                int imgHeight = image.getHeight();
+                int arc = 8; // 圆角直径
 
-                for (int i = 1; i <= 6; i++) {
-                    float alpha = 0.02f * i;
-                    if (selected) {
-                        g2.setColor(new Color(0, 149, 255, (int) (alpha * 255)));
-                        g2.setStroke(new BasicStroke(i * 1f));
-                    } else {
-                        g2.setColor(new Color(129, 129, 129, (int) (alpha * 255)));
-                        g2.setStroke(new BasicStroke(i * 2f));
-                    }
-                    int offset = (7 - i);
-                    g2.drawRoundRect(-offset, -offset, width + 2 * offset, height + 2 * offset, 0, 0);
+                // 绘制多层发光效果，从外到内逐渐变亮
+                for (int i = GLOW_SIZE; i > 0; i--) {
+                    float alpha = (float) (GLOW_SIZE - i + 1) / GLOW_SIZE * 0.2f;
+                    Color layerColor = new Color(
+                            glowColor.getRed(),
+                            glowColor.getGreen(),
+                            glowColor.getBlue(),
+                            Math.min(255, (int) (glowColor.getAlpha() * alpha))
+                    );
+                    g2d.setColor(layerColor);
+
+                    // 用圆角矩形实现发光边框
+                    Shape outerRect = new RoundRectangle2D.Double(
+                            imgX - i, imgY - i,
+                            imgWidth + 2 * i, imgHeight + 2 * i,
+                            arc + 2 * i, arc + 2 * i
+                    );
+                    Shape innerRect = new RoundRectangle2D.Double(
+                            imgX, imgY,
+                            imgWidth, imgHeight,
+                            arc, arc
+                    );
+
+                    // 创建环形区域（外矩形减去内矩形）
+                    Area glowArea = new Area(outerRect);
+                    glowArea.subtract(new Area(innerRect));
+
+                    g2d.fill(glowArea);
                 }
 
-                g2.dispose();
+                // 绘制圆角边框线条
+                g2d.setColor(selected ? new Color(190, 190, 190, 255) : new Color(135, 219, 250, 255));
+                g2d.setStroke(new BasicStroke(0.5f));
+                g2d.draw(new java.awt.geom.RoundRectangle2D.Double(
+                        imgX - 1, imgY - 1,
+                        imgWidth + 2, imgHeight + 2,
+                        arc + 2, arc + 2
+                ));
             }
         };
 
         imgPanel.setOpaque(false);
-        imgPanel.setPreferredSize(new Dimension(image.getWidth(), image.getHeight()));
+        // 调整面板大小，包含发光效果
+        imgPanel.setPreferredSize(new Dimension(
+                image.getWidth() + 2 * GLOW_SIZE,
+                image.getHeight() + 2 * GLOW_SIZE
+        ));
 
         // 鼠标监听：点击选中，拖拽与右键菜单
         imgPanel.addMouseListener(new MouseAdapter() {
@@ -77,25 +126,31 @@ public class FloatingImageWindow extends JWindow {
                 if (e.isPopupTrigger()) {
                     popupMenu.show(imgPanel, e.getX(), e.getY());
                 } else if (SwingUtilities.isLeftMouseButton(e)) {
-                    selectWindow();
-                    mouseOffset = e.getPoint();
+                    // 检查点击是否在图片区域内
+                    int imgX = GLOW_SIZE;
+                    int imgY = GLOW_SIZE;
+                    if (e.getX() >= imgX && e.getX() <= imgX + image.getWidth() &&
+                            e.getY() >= imgY && e.getY() <= imgY + image.getHeight()) {
+                        selectWindow();
+                        mouseOffset = new Point(e.getX() - imgX, e.getY() - imgY);
+                    }
                 }
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-
                 if (e.isPopupTrigger()) {
                     popupMenu.show(imgPanel, e.getX(), e.getY());
                 }
             }
         });
+
         imgPanel.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
                 if (mouseOffset != null) {
                     Point screen = e.getLocationOnScreen();
-                    setLocation(screen.x - mouseOffset.x, screen.y - mouseOffset.y);
+                    setLocation(screen.x - mouseOffset.x - GLOW_SIZE, screen.y - mouseOffset.y - GLOW_SIZE);
                 }
             }
         });
@@ -140,12 +195,12 @@ public class FloatingImageWindow extends JWindow {
     private JPopupMenu createContextMenu() {
         JPopupMenu menu = new JPopupMenu();
 
-        JMenuItem saveItem = new JMenuItem("另存为");
+        JMenuItem saveItem = new JMenuItem("    图片另存为    ");
         saveItem.addActionListener(e -> {
             setAlwaysOnTop(false);
             JFileChooser chooser = new JFileChooser();
             chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-            chooser.setDialogTitle("另存为");
+            chooser.setDialogTitle("图片另存为");
             chooser.setSelectedFile(new File("screenshot.png"));
             int ret = chooser.showSaveDialog(this);
             if (ret == JFileChooser.APPROVE_OPTION) {
@@ -163,7 +218,7 @@ public class FloatingImageWindow extends JWindow {
         });
         menu.add(saveItem);
 
-        JMenuItem closeItem = new JMenuItem("销毁");
+        JMenuItem closeItem = new JMenuItem("    关闭    ");
         closeItem.addActionListener(e -> disposeWindow());
         menu.add(closeItem);
 
@@ -185,4 +240,3 @@ public class FloatingImageWindow extends JWindow {
         }
     }
 }
-
