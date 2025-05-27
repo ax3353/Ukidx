@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>org.zk.ip.Ukidx</id>
     <name>Ukidx</name>
-    <version>1.0</version>
+    <version>1.1</version>
     <vendor email="247213579@qq.com">zk</vendor>
 
     <description><![CDATA[
@@ -21,7 +21,9 @@
 
     <change-notes><![CDATA[
         <ul>
-            <li>no changes</li>
+            <li>新增悬浮剪贴板功能</li>
+            <li>新增剪贴板监听功能</li>
+            <li>悬浮窗支持拖拽、复制、关闭操作</li>
         </ul>
     ]]></change-notes>
 
@@ -33,6 +35,7 @@
         <!-- 项目服务 -->
         <projectService id="org.zk.ip.service.AnnotationService"
                         serviceImplementation="org.zk.ip.service.AnnotationService"/>
+
         <projectService id="org.zk.ip.service.EditorService"
                         serviceImplementation="org.zk.ip.service.EditorService"/>
 
@@ -40,18 +43,23 @@
         <intentionAction id="org.zk.ip.intention.RequestParamIntention">
             <className>org.zk.ip.intention.RequestParamIntention</className>
         </intentionAction>
+
         <intentionAction id="org.zk.ip.intention.RequestBodyIntention">
             <className>org.zk.ip.intention.RequestBodyIntention</className>
         </intentionAction>
+
         <intentionAction id="org.zk.ip.intention.ApiModelPropertyIntention">
             <className>org.zk.ip.intention.ApiModelPropertyIntention</className>
         </intentionAction>
+
         <intentionAction id="org.zk.ip.intention.MybatisParamIntention">
             <className>org.zk.ip.intention.MybatisParamIntention</className>
         </intentionAction>
+
         <intentionAction id="org.zk.ip.intention.ToUnderlineIntention">
             <className>org.zk.ip.intention.ToUnderlineIntention</className>
         </intentionAction>
+
         <intentionAction id="org.zk.ip.intention.ToCamelIntention">
             <className>org.zk.ip.intention.ToCamelIntention</className>
         </intentionAction>
@@ -66,11 +74,13 @@
                     text="Previous" description="Find previous">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift K"/>
             </action>
+
             <action id="org.zk.ip.action.FindNextKeywordAction"
                     class="org.zk.ip.action.FindNextKeywordAction"
                     text="Next" description="Find next">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl K"/>
             </action>
+
             <action id="org.zk.ip.action.NamingConverterAction"
                     class="org.zk.ip.action.NamingConverterAction"
                     text="Name Converter" description="Name converter">
@@ -78,12 +88,21 @@
             </action>
         </group>
 
+        <!-- 截图贴图功能 -->
         <action id="org.zk.ip.action.ScreenCaptureAction"
                 class="org.zk.ip.action.ScreenCaptureAction"
                 text="ScreenCaptureAction"  description="ScreenCaptureAction"
                 icon="/icons/camera.svg">
             <add-to-group group-id="MainToolBar" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt X"/>
+        </action>
+
+        <!-- 悬浮剪贴板右键菜单 -->
+        <action id="org.zk.ip.action.FloatingClipboardAction"
+                class="org.zk.ip.action.FloatingClipboardAction"
+                text="悬浮复制内容"
+                description="Display clipboard contents in a floating window">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
         </action>
     </actions>
 </idea-plugin>

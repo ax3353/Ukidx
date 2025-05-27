@@ -1,4 +1,4 @@
-package org.zk.ip.window;
+package org.zk.ip.ui;
 
 
 import javax.swing.*;

@@ -2,8 +2,8 @@ package org.zk.ip.action;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import org.zk.ip.window.FloatingImageWindow;
-import org.zk.ip.window.ScreenCaptureOverlay;
+import org.zk.ip.ui.FloatingImageWindow;
+import org.zk.ip.ui.ScreenCaptureOverlay;
 
 import javax.swing.*;
 import java.awt.*;
