@@ -15,15 +15,14 @@
             <li>alt + x 截图贴图</li>
             <li>ctrl + k 查找下一个</li>
             <li>ctrl + shift + k 查找上一个</li>
+            <li>右键复制选择内容到Notebook</li>
         </ul>
         QQ: 247213579
     ]]></description>
 
     <change-notes><![CDATA[
         <ul>
-            <li>新增悬浮剪贴板功能</li>
-            <li>新增剪贴板监听功能</li>
-            <li>悬浮窗支持拖拽、复制、关闭操作</li>
+            <li></li>
         </ul>
     ]]></change-notes>
 
@@ -63,6 +62,13 @@
         <intentionAction id="org.zk.ip.intention.ToCamelIntention">
             <className>org.zk.ip.intention.ToCamelIntention</className>
         </intentionAction>
+
+        <toolWindow id="Notebook"
+                    icon="/icons/clipboard.svg"
+                    anchor="right"
+                    factoryClass="org.zk.ip.ui.NotebookToolWindowFactory"
+                    secondary="true"
+                    canCloseContents="false"/>
     </extensions>
 
     <actions>
@@ -97,11 +103,11 @@
             <keyboard-shortcut keymap="$default" first-keystroke="alt X"/>
         </action>
 
-        <!-- 悬浮剪贴板右键菜单 -->
-        <action id="org.zk.ip.action.FloatingClipboardAction"
-                class="org.zk.ip.action.FloatingClipboardAction"
-                text="悬浮复制内容"
-                description="Display clipboard contents in a floating window">
+        <!-- 添加到编辑器右键菜单 -->
+        <action id="org.zk.ip.action.NotebookAction"
+                class="org.zk.ip.action.NotebookAction"
+                text="Copy to Notebook"
+                description="Copy to Notebook">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
         </action>
     </actions>
