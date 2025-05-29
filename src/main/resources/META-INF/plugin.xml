@@ -97,8 +97,9 @@
         <!-- 截图贴图功能 -->
         <action id="org.zk.ip.action.ScreenCaptureAction"
                 class="org.zk.ip.action.ScreenCaptureAction"
-                text="ScreenCaptureAction"  description="ScreenCaptureAction"
-                icon="/icons/camera.svg">
+                text="ScreenCaptureAction"
+                icon="/icons/camera.svg"
+                description="ScreenCaptureAction">
             <add-to-group group-id="MainToolBar" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt X"/>
         </action>
@@ -110,5 +111,10 @@
                 description="Copy to Notebook">
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
         </action>
+
+        <action id="org.zk.ip.action.ClearNotebookAction"
+                class="org.zk.ip.action.ClearNotebookAction"
+                text="清空Notebook"
+                description="Clear notebook"/>
     </actions>
 </idea-plugin>

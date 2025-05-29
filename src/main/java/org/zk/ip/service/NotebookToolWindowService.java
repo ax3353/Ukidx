@@ -1,5 +1,6 @@
 package org.zk.ip.service;
 
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Editor;
 
 /**
@@ -17,7 +18,9 @@ public class NotebookToolWindowService {
             return;
         }
 
-        editor.getDocument().setText(text);
-        editor.getCaretModel().moveToOffset(text.length());
+        ApplicationManager.getApplication().runWriteAction(() -> {
+            editor.getDocument().setText(text);
+            editor.getCaretModel().moveToOffset(text.length());
+        });
     }
 }

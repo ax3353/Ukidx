@@ -6,14 +6,16 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
-import java.util.function.Consumer;
 
+/**
+ * @author zk
+ */
 public class ScreenCaptureOverlay extends JWindow {
     private final BufferedImage screenImage;
     private Point startPt;
     private Rectangle captureRect;
 
-    public ScreenCaptureOverlay(Consumer<BufferedImage> callback) throws AWTException {
+    public ScreenCaptureOverlay() throws AWTException {
         // 1. 预抓取全屏图像
         Robot robot = new Robot();
         Rectangle screenBounds = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
