@@ -41,9 +41,14 @@ public class ScreenCaptureOverlay extends JWindow {
                 if (startPt == null) {
                     return;
                 }
-                captureRect = makeRectangle(startPt, e.getPoint());
+
                 // 关闭覆盖层
                 dispose();
+
+                captureRect = makeRectangle(startPt, e.getPoint());
+                if (captureRect.getHeight() == 0 || captureRect.getWidth() == 0) {
+                    return;
+                }
 
                 try {
                     Robot robot = new Robot();
