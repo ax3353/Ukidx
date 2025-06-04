@@ -1,6 +1,5 @@
 package org.zk.ip.ui;
 
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -16,6 +15,11 @@ public class ScreenCaptureOverlay extends JWindow {
     private Rectangle captureRect;
 
     public ScreenCaptureOverlay() throws AWTException {
+        this(null);
+    }
+
+    public ScreenCaptureOverlay(Runnable onComplete) throws AWTException {
+
         // 1. 预抓取全屏图像
         Robot robot = new Robot();
         Rectangle screenBounds = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
@@ -47,6 +51,10 @@ public class ScreenCaptureOverlay extends JWindow {
 
                 captureRect = makeRectangle(startPt, e.getPoint());
                 if (captureRect.getHeight() == 0 || captureRect.getWidth() == 0) {
+                    // 即使没有选区，也要执行回调
+                    if (onComplete != null) {
+                        onComplete.run();
+                    }
                     return;
                 }
 
@@ -59,9 +67,18 @@ public class ScreenCaptureOverlay extends JWindow {
                         // 将窗口放在截取区域左上角
                         window.setLocation(captureRect.x, captureRect.y);
                         window.setVisible(true);
+
+                        // 执行完成回调
+                        if (onComplete != null) {
+                            onComplete.run();
+                        }
                     });
                 } catch (AWTException ex) {
                     ex.printStackTrace();
+                    // 出错时也要执行回调
+                    if (onComplete != null) {
+                        onComplete.run();
+                    }
                 }
             }
         });
@@ -87,6 +104,10 @@ public class ScreenCaptureOverlay extends JWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
+                // ESC取消时也要执行回调
+                if (onComplete != null) {
+                    onComplete.run();
+                }
             }
         });
     }

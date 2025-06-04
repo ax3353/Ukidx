@@ -94,15 +94,15 @@
             </action>
         </group>
 
-        <!-- 截图贴图功能 -->
-        <action id="org.zk.ip.action.ScreenCaptureAction"
-                class="org.zk.ip.action.ScreenCaptureAction"
-                text="ScreenCaptureAction"
-                icon="/icons/camera.svg"
-                description="ScreenCaptureAction">
+        <!-- 截图功能组 -->
+        <action id="ScreenCaptureGroup"
+                class="org.zk.ip.action.ScreenCaptureActionGroup"
+                text="截图"
+                description="截图功能组">
             <add-to-group group-id="MainToolBar" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt X"/>
         </action>
+        -->
 
         <!-- 添加到编辑器右键菜单 -->
         <action id="org.zk.ip.action.NotebookAction"
